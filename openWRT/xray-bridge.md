@@ -28,8 +28,9 @@ opkg install xray-core
 
 ```bash
 # Копирование баз данных
-scp ./geoip.dat root@192.168.1.1:/usr/share/xray
-scp ./geosite.dat root@192.168.1.1:/usr/share/xray
+mkdir -p /usr/share/xray/ 
+wget -O /usr/share/xray/geosite.dat "https://github.com/xxphantom/xray-recipes/raw/refs/heads/main/openWRT/geodata/geosite.dat"
+wget -O /usr/share/xray/geoip.dat "https://github.com/xxphantom/xray-recipes/raw/refs/heads/main/openWRT/geodata/geoip.dat"
 
 # Копирование конфигурации
 scp ./config.json root@192.168.1.1:/etc/xray
