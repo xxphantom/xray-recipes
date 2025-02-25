@@ -36,6 +36,99 @@ wget -O /usr/share/xray/geoip.dat "https://github.com/xxphantom/xray-recipes/raw
 scp ./config.json root@192.168.1.1:/etc/xray
 ```
 
+# Пример конфига (на роутере)
+
+```json
+{
+  "reverse": {
+    "bridges": [
+      {
+        "tag": "bridge",
+        "domain": "changeme.changeme"
+      }]
+    },
+  "inbounds": [],
+  "log": {
+    "loglevel": "none"
+  },
+  "outbounds": [
+    {
+      "mux": {
+        "concurrency": -1,
+        "enabled": false,
+        "xudpConcurrency": 8,
+        "xudpProxyUDP443": ""
+      },
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "reality.example.com",
+            "port": 443,
+            "users": [
+              {
+                "encryption": "none",
+                "flow": "xtls-rprx-vision",
+                "id": "change-me",
+                "level": 8,
+                "security": "auto"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "realitySettings": {
+          "allowInsecure": false,
+          "fingerprint": "chrome",
+          "publicKey": "change-me",
+          "serverName": "reality.example.com",
+          "shortId": "change-me",
+          "show": false,
+          "spiderX": ""
+        },
+        "security": "reality",
+        "tcpSettings": {
+          "header": {
+            "type": "none"
+          }
+        }
+      },
+      "tag": "proxy"
+    },
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {
+        "response": {
+          "type": "http"
+        }
+      },
+      "tag": "block"
+    }
+  ],
+    "routing": {
+      "rules": [
+      {
+        "type": "field",
+        "inboundTag": ["bridge"],
+        "domain": ["full:changeme.changeme"],
+        "outboundTag": "proxy"
+      },
+      {
+        "type": "field",
+        "inboundTag": ["bridge"],
+        "outboundTag": "direct"
+      }]
+    }
+}
+```
+
 ### 3. Активация и запуск сервиса
 
 ```bash
@@ -82,7 +175,7 @@ logread | grep xray
 
 2. Если нет доступа к порталу:
 
-- Проверьте правильность настроек Reality (publicKey, serverName, shortId)
+- Проверьте правильность настроек Reality ()
 - Убедитесь, что порт 443 доступен
 
 ## Управление сервисом
