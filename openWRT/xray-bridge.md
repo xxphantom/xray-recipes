@@ -15,9 +15,9 @@
 
 Микро версии гео файлов лежат в этом репо в папке geodata
 
-## Пошаговая инструкция установки
+## Пошаговая инструкция установки, выберите один из вариантов
 
-### 1. Установка пакета
+### 1. Установка Xray пакета из репозитория OpenWRT (просто, но Xray будет не самым свежим)
 
 ```bash
 opkg update
@@ -33,8 +33,13 @@ wget -O /usr/share/xray/geosite.dat "https://github.com/xxphantom/xray-recipes/r
 wget -O /usr/share/xray/geoip.dat "https://github.com/xxphantom/xray-recipes/raw/refs/heads/main/openWRT/geodata/geoip.dat"
 
 # Копирование конфигурации
-scp ./config.json root@192.168.1.1:/etc/xray
+cat > /etc/xray/config.json << 'EOF'
+Здесь должен быть ваш конфиг файл Xray
+EOF
 ```
+### 1. Установка Xray с помощью бинарника из github Xray (сложнее, но Xray будет самым актуальным) 
+
+Выполнить шаги по установке [отсюда](https://github.com/xxphantom/xray-recipes/blob/main/openWRT/install-xray-openWRT.md)
 
 # Пример конфига (на роутере)
 
@@ -209,7 +214,7 @@ uci commit xray
 /etc/init.d/xray disable
 ```
 
-### 2. Удаление пакета
+### 2. Удаление пакета (для варианта установки в виде пакета OpenWRT)
 
 ```bash
 opkg remove xray-core
