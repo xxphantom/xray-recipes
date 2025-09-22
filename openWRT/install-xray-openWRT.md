@@ -49,6 +49,22 @@ rm /tmp/Xray-linux-arm64-v8a.zip
 mv /tmp/xray-core/xray /usr/bin/
 chmod +x /usr/bin/xray
 
+
+# Копирование баз роутинга
+mkdir -p /usr/share/xray/
+
+# Копирование МИНИМАЛЬНЫХ баз роутинга (если роутинг не нужен и мало места на флешке роутера)
+wget -O /usr/share/xray/geosite.dat "https://github.com/xxphantom/xray-recipes/raw/refs/heads/main/openWRT/geodata/geosite.dat"
+wget -O /usr/share/xray/geoip.dat "https://github.com/xxphantom/xray-recipes/raw/refs/heads/main/openWRT/geodata/geoip.dat"
+
+# ИЛИ
+
+# Копирование ПОЛНЫХ баз роутинга (если НУЖЕН роутинг и ЕСТЬ место на флешке роутера)
+mv /tmp/xray-core/geosite.dat /usr/share/xray/
+mv /tmp/xray-core/geoip.dat /usr/share/xray/
+
+# Копирование конфигурации
+scp ./config.json root@192.168.1.1:/etc/xray
 # Очистите временные файлы
 rm -rf /tmp/xray-core
 ```
