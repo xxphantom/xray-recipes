@@ -1,4 +1,4 @@
-# Установка свежей версии Xray на OpenWrt (c целью доступа к локальной сети роутера и доступа к Интернет через вашего домашнего провайдера), основная инструкция [тут](https://github.com/xxphantom/xray-recipes/blob/main/openWRT/xray-bridge.md). 
+# Установка Xray на OpenWrt основная инструкция [тут](https://github.com/xxphantom/xray-recipes/blob/main/openWRT/xray-bridge.md). 
 
 ## Предварительные требования
 
@@ -63,8 +63,6 @@ wget -O /usr/share/xray/geoip.dat "https://github.com/xxphantom/xray-recipes/raw
 mv /tmp/xray-core/geosite.dat /usr/share/xray/
 mv /tmp/xray-core/geoip.dat /usr/share/xray/
 
-# Копирование конфигурации
-scp ./config.json root@192.168.1.1:/etc/xray
 # Очистите временные файлы
 rm -rf /tmp/xray-core
 ```
